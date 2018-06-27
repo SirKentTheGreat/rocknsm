@@ -1,0 +1,52 @@
+Cluster Kafka
+
+STOP KAFKA AND ZOOKEEPER
+
+
+sudo vi /etc/kafka/server.properties
+
+change broker.id=1
+
+:wq
+
+note: every broker id has to be different.
+
+sudo vi /etc/zookeeper/zoo.cfg
+
+go to bottom Shift G
+Insert:
+
+server.0=172.16.1.100:2182:2183
+server.1=172.16.10.100:2182:2183
+server.2=172.16.20.100:2182:2183
+server.3=172.16.30.100:2182:2183
+server.4=172.16.40.100:2182:2183
+server.5=172.16.50.100:2182:2183
+server.6=172.16.60.100:2182:2183
+server.7=172.16.70.100:2182:2183
+server.8=172.16.80.100:2182:2183
+server.9=172.16.90.100:2182:2183
+server.10=172.16.100.100:2182:2183
+
+:wq
+*you are adding all of the servers involved and
+matching them to the kafka/server.properties broker id
+
+Now you have to open the Firewall
+
+sudo firewall-cmd --add-port=2182/tcp --permanent
+sudo firewall-cmd --add-port=2183/tcp --permanent
+
+sudo firewall-cmd --reload
+
+sudo firewall-cmd --list-ports
+sudo -s
+
+next zookeeper requires a file called myid which is basically
+your broker.id from kafka.
+
+echo "1" > /var/lib/zookeeper/myid
+
+systemctl start zookeeper
+
+systemctl status zookeeper

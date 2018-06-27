@@ -1,0 +1,5 @@
+Host
+HostName 172.16.10.100
+User admin
+IdentityFile ~/.ssh/id_rsa
+
